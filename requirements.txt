@@ -1,0 +1,5 @@
+# Raspberry Pi RGB LED Matrix library
+# Install from source: https://github.com/hzeller/rpi-rgb-led-matrix
+# The Python bindings are built during installation, not via pip
+
+# No pip dependencies required - the rgbmatrix library must be installed from source
