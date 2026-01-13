@@ -10,6 +10,7 @@ Usage:
 
 Requires root privileges to access the GPIO pins.
 """
+from __future__ import annotations
 
 import argparse
 import signal
@@ -94,8 +95,8 @@ class WordClock:
 
         # Hardware configuration
         options.hardware_mapping = self.args.led_gpio_mapping
-        options.row_address_type = 0
-        options.multiplexing = 0
+        options.row_address_type = self.args.led_row_addr_type
+        options.multiplexing = self.args.led_multiplexing
 
         # Display quality settings
         options.pwm_bits = self.args.led_pwm_bits
@@ -129,7 +130,7 @@ class WordClock:
 
         if self.matrix and self.canvas:
             # Render to canvas and swap
-            self.renderer.render_to_canvas(self.canvas, positions, dots)
+            self.renderer.render_to_canvas(self.canvas, GRID, positions, dots)
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
         else:
             # Simulation mode - print to console
@@ -233,8 +234,8 @@ def main():
     # LED matrix hardware options
     parser.add_argument(
         "--led-gpio-mapping",
-        default="adafruit-hat",
-        help="GPIO mapping: regular, adafruit-hat, adafruit-hat-pwm (default: adafruit-hat)"
+        default="regular",
+        help="GPIO mapping: regular, adafruit-hat, adafruit-hat-pwm (default: regular)"
     )
     parser.add_argument(
         "--led-pwm-bits",
@@ -248,13 +249,23 @@ def main():
     )
     parser.add_argument(
         "--led-slowdown-gpio",
-        type=int, default=4,
-        help="GPIO slowdown (0-4, default: 4 for RPi 4)"
+        type=int, default=1,
+        help="GPIO slowdown (0-4, default: 1; use 4 for RPi 4, 0-1 for RPi 1)"
     )
     parser.add_argument(
         "--led-no-hardware-pulse",
         action="store_true",
         help="Disable hardware PWM"
+    )
+    parser.add_argument(
+        "--led-row-addr-type",
+        type=int, default=0,
+        help="Row address type (0-4, default: 0)"
+    )
+    parser.add_argument(
+        "--led-multiplexing",
+        type=int, default=0,
+        help="Multiplexing type (0-18, default: 0)"
     )
     parser.add_argument(
         "--led-rgb-sequence",

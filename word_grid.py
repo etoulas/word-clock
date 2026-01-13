@@ -2,6 +2,7 @@
 Bernese German (Bärndütsch) word grid for QLOCKTWO-style word clock.
 Based on the original QLOCKTWO Swiss German layout.
 """
+from __future__ import annotations
 
 # The 11x10 letter grid
 # Each row has 11 characters
