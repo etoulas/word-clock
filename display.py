@@ -30,7 +30,7 @@ class DisplayConfig:
     # Colors (RGB tuples)
     color_on: tuple = (255, 255, 255)   # White for lit letters
     color_off: tuple = (0, 0, 0)        # Off
-    color_dim: tuple = (15, 15, 15)     # Dim for unlit letters
+    color_dim: tuple = (40, 40, 40)     # Dim for unlit letters
     color_dot: tuple = (255, 255, 255)  # Color for minute dots
 
     # Whether to show dim letters for unlit characters

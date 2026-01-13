@@ -38,9 +38,11 @@ class WordClock:
         self.running = True
 
         # Setup display configuration
+        dim = args.dim_brightness
         self.display_config = DisplayConfig(
             color_on=self._parse_color(args.color),
-            show_dim_letters=args.dim_letters,
+            color_dim=(dim, dim, dim),
+            show_dim_letters=dim > 0,
         )
         self.renderer = DisplayRenderer(self.display_config)
 
@@ -221,9 +223,9 @@ def main():
         help="Display brightness (1-100, default: 50)"
     )
     parser.add_argument(
-        "--dim-letters",
-        action="store_true",
-        help="Show dim unlit letters"
+        "--dim-brightness",
+        type=int, default=40,
+        help="Brightness of unlit letters (0-255, default: 40)"
     )
     parser.add_argument(
         "--simulate", "-s",
