@@ -35,6 +35,37 @@ cd bindings/python
 sudo make build-python install-python
 ```
 
+### Raspberry Pi Configuration
+
+The RGB matrix requires exclusive access to certain hardware. Configure your Pi as follows:
+
+**1. Disable onboard audio**
+
+Edit `/boot/config.txt` and set:
+```
+dtparam=audio=off
+```
+
+On older Pi models (e.g., Pi 1 Model B), also unload the audio module:
+```bash
+sudo modprobe -r snd_bcm2835
+```
+
+**2. Disable 1-Wire interface**
+
+Run `sudo raspi-config`, then navigate to:
+Interface Options → 1-Wire → Disable
+
+**3. Isolate a CPU core (optional, improves stability)**
+
+Add `isolcpus=3` at the end of `/boot/cmdline.txt` (space-separated, single line).
+
+**4. Avoid GPIO conflicts**
+
+Do not run other programs that use GPIO pins while the clock is running.
+
+Reboot after making these changes.
+
 ## Usage
 
 ```bash
